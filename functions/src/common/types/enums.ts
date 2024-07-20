@@ -8,6 +8,7 @@ export enum AppErrors {
 }
 
 export enum CollectionNames {
+  Blog = "Blog",
   Article = "Article",
   DraftArticle = "DraftArticle",
 }

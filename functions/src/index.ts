@@ -8,6 +8,11 @@
  */
 // firebase
 import { onRequest } from "firebase-functions/v2/https";
+// imports
+import * as dotenv from "dotenv";
+
+// configure env
+dotenv.config();
 
 import app from "./app";
 
