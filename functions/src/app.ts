@@ -6,6 +6,9 @@ import * as fileParser from "express-multipart-file-parser";
 // routers
 import { articleRouter, draftRouter, uploadRouter } from "@/routers";
 
+// controllers
+import { BlogController } from "@/controllers";
+
 // create express app
 const app = express();
 
@@ -40,6 +43,9 @@ app.get("/", (req, res) => {
     message: `Hello ${name ?? "World"}!`,
   });
 });
+
+// blog routes
+app.get("/blog", BlogController.getBlog);
 
 // upload image routes
 app.use("/upload", uploadRouter);
