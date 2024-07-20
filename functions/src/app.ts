@@ -1,12 +1,19 @@
 // imports
 import * as cors from "cors";
 import * as express from "express";
+import * as fileParser from "express-multipart-file-parser";
 
-// contollers
-import { ArticleController, DraftArticleController } from "@/controllers";
+// routers
+import { articleRouter, draftRouter, uploadRouter } from "@/routers";
+
+// controllers
+import { BlogController } from "@/controllers";
 
 // create express app
 const app = express();
+
+// accept files
+app.use(fileParser);
 
 // enable cors
 app.use(cors());
@@ -37,19 +44,16 @@ app.get("/", (req, res) => {
   });
 });
 
-// article routes
-app.post("/articles", ArticleController.createArticle);
-app.put("/articles/:articleId", ArticleController.updateArticle);
-app.delete("/articles/:articleId", ArticleController.deleteArticle);
-app.get("/articles", ArticleController.getAllArticles);
-app.get("/articles/:articleId", ArticleController.getSingleArticle);
+// blog routes
+app.get("/blog", BlogController.getBlog);
+
+// upload image routes
+app.use("/upload", uploadRouter);
 
 // draft article routes
-app.post("/drafts", DraftArticleController.createDraft);
-app.put("/drafts/:draftId", DraftArticleController.updateDraft);
-app.post("/drafts/:draftId/publish", DraftArticleController.publishDraft);
-app.delete("/drafts/:draftId", DraftArticleController.deleteDraft);
-app.get("/drafts", DraftArticleController.getAllDrafts);
-app.get("/drafts/:draftId", DraftArticleController.getSingleDraft);
+app.use("/drafts", draftRouter);
+
+// article routes
+app.use("/articles", articleRouter);
 
 export default app;
